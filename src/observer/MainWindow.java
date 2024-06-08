@@ -7,8 +7,11 @@ import java.awt.event.ActionListener;
 
 public class MainWindow extends JFrame {
     private JPanel panel;
+    private Subject subject;
 
     public MainWindow() {
+        subject = new Subject();
+
         setTitle("Observer Pattern with AspectJ");
         setSize(400, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -27,6 +30,9 @@ public class MainWindow extends JFrame {
         panel.add(redButton);
         panel.add(greenButton);
         panel.add(blueButton);
+
+        // Añadir observadores
+        subject.addObserver(new ConcreteObserver());
     }
 
     private class ColorButtonListener implements ActionListener {
@@ -39,7 +45,7 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             panel.setBackground(color);
-            // Aquí se notificará a los observadores usando AspectJ
+            subject.notifyObservers("Color changed to: " + color.toString());
         }
     }
 
@@ -50,3 +56,4 @@ public class MainWindow extends JFrame {
         });
     }
 }
+
